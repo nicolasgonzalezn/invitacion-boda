@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Nico & Nathi | Nos casamos</title>
+<meta name="theme-color" content="#1A2E4A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=4">
+</head>
+<body>
+
+<div id="loader">
+  <span>Cargando invitación...</span>
+</div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">N&nbsp;&amp;&nbsp;N</a>
+    <button id="navToggle" class="nav-toggle" aria-label="Abrir menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul id="navLinks" class="nav-links">
+      <li><a href="#historia" class="nav-link">Historia</a></li>
+      <li><a href="#evento" class="nav-link">Lugar</a></li>
+      <li><a href="#itinerario" class="nav-link">Itinerario</a></li>
+      <li><a href="#regalos" class="nav-link">Regalos</a></li>
+      <li><a href="#playlist" class="nav-link">Playlist</a></li>
+      <li><a href="#rsvp" class="nav-link nav-cta">Si voy!</a></li>
+      <li><a href="#contacto" class="nav-link">Contacto</a></li>
+      <li><a href="#faq" class="nav-link">FAQ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="hero">
+  <img class="hero-media" src="assets/images/hero-poster.jpg" alt="Nico & Nathi">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="eyebrow reveal">¡Nos casamos!</p>
+    <h1 class="script-accent reveal" data-delay="1">Nico &amp; Nathi</h1>
+    <p class="hero-date reveal" data-delay="2" id="weddingDateLabel">12 de diciembre de 2026</p>
+
+    <div class="countdown reveal" data-delay="3" id="countdown">
+      <div class="countdown-item"><span id="cd-days">00</span><small>días</small></div>
+      <div class="countdown-item"><span id="cd-hours">00</span><small>horas</small></div>
+      <div class="countdown-item"><span id="cd-mins">00</span><small>min</small></div>
+      <div class="countdown-item"><span id="cd-secs">00</span><small>seg</small></div>
+    </div>
+  </div>
+
+  <a href="#historia" class="scroll-cue">
+    <span>Ver invitación</span>
+    <svg viewBox="0 0 24 24" width="18" height="18"><path d="M12 16 4 8h16z" fill="currentColor"/></svg>
+  </a>
+</header>
+
+<button id="musicToggle" class="music-toggle" aria-label="Reproducir música">
+  <svg id="iconPlay" viewBox="0 0 24 24" width="18" height="18"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+  <svg id="iconPause" viewBox="0 0 24 24" width="18" height="18" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z" fill="currentColor"/></svg>
+</button>
+<audio id="bgAudio" loop preload="none">
+  <source src="assets/audio/background-song.mp3" type="audio/mpeg">
+</audio>
+
+<canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+<section id="historia" class="section split reveal-group">
+  <div class="split-media reveal">
+    <img src="assets/images/pareja-historia.jpg" alt="Nico & Nathi" loading="lazy">
+  </div>
+  <div class="split-text">
+    <span class="icon-badge reveal">
+      <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M24 39C24 39 7 27.8 7 16.5C7 10.7 11.4 6 16.8 6C20.1 6 22.9 7.7 24 10.4C25.1 7.7 27.9 6 31.2 6C36.6 6 41 10.7 41 16.5C41 27.8 24 39 24 39Z"/>
+      </svg>
+    </span>
+    <h2 class="reveal">Nuestra historia</h2>
+    <p class="reveal">Cuenta acá cómo se conocieron: el lugar, el momento, esa primera conversación que lo cambió todo.</p>
+    <p class="reveal">Sigue con cómo fue creciendo la relación, los viajes, los proyectos juntos, y por qué decidieron dar este paso.</p>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">&times;</button>
+  <div class="lightbox-content" id="lightboxContent"></div>
+</div>
+
+<section id="evento" class="section alt-bg">
+  <div class="section-heading reveal">
+    <span class="icon-badge">
+      <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M24 6c-7 0-12.5 5.6-12.5 12.5C11.5 28 24 42 24 42s12.5-14 12.5-23.5C36.5 11.6 31 6 24 6z"/>
+        <circle cx="24" cy="18" r="4.5"/>
+      </svg>
+    </span>
+    <h2>Detalles del evento</h2>
+  </div>
+
+  <div class="cards-row">
+    <div class="event-card reveal">
+      <div class="event-card-img" style="background-image:url('assets/images/ceremonia.jpg')"></div>
+      <h3>Nombre de la Iglesia / Lugar</h3>
+      <p class="event-sub">Ceremonia</p>
+      <p class="event-meta"><span class="pin">📍</span> Dirección de la ceremonia, Comuna, Ciudad</p>
+      <p class="event-meta"><span class="clock">🕒</span> 15:00 horas</p>
+      <a class="btn btn-outline" href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>
+    </div>
+
+    <div class="event-card reveal">
+      <div class="event-card-img" style="background-image:url('assets/images/recepcion.jpg'); background-position: center bottom;"></div>
+      <h3>Fundo El Castillo</h3>
+      <p class="event-sub">Recepción y fiesta</p>
+      <p class="event-meta"><span class="clock">🕒</span> 17:00 horas</p>
+      <a class="btn btn-outline" href="https://maps.app.goo.gl/YhXWKvpAQYsGJaVS9" target="_blank" rel="noopener">Google Maps</a>
+    </div>
+  </div>
+
+  <p class="fine-print reveal">Tu puntualidad es muy importante para nosotros</p>
+</section>
+
+<section id="itinerario" class="section">
+  <div class="section-heading reveal">
+    <span class="icon-badge">
+      <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="24" cy="24" r="16"/>
+        <path d="M24 15v9l7 4"/>
+      </svg>
+    </span>
+    <h2>Itinerario</h2>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="timeline-icon">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 40V22C10 12 16 6 24 6C32 6 38 12 38 22V40"/>
+          <circle cx="24" cy="6" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="15" cy="9" r="1" fill="currentColor" stroke="none"/>
+          <circle cx="33" cy="9" r="1" fill="currentColor" stroke="none"/>
+          <circle cx="11" cy="17" r="0.9" fill="currentColor" stroke="none"/>
+          <circle cx="37" cy="17" r="0.9" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <span class="timeline-time">15:00</span>
+      <strong>Ceremonia</strong>
+      <em>Lugar de la ceremonia</em>
+    </div>
+
+    <div class="timeline-connector" aria-hidden="true">
+      <span class="connector-line"></span>
+      <span class="connector-pin">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+      </span>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-icon">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 6h14L13 19v15M9 34h8"/>
+          <path d="M42 6H28l7 13v15M39 34h-8"/>
+        </svg>
+      </div>
+      <span class="timeline-time">17:15</span>
+      <strong>Cóctel</strong>
+      <em>Lugar de recepción</em>
+    </div>
+
+    <div class="timeline-connector" aria-hidden="true">
+      <span class="connector-line"></span>
+      <span class="connector-pin">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+      </span>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-icon">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="24" cy="24" r="17"/>
+          <path d="M24 15c3.5 0 5.5 2 5.5 4.2 0 1.8-1.7 2.8-3.5 3 2 .2 4 1.3 4 3.3 0 2.4-2.7 4.5-6 4.5s-6.3-2.3-6.3-5.6"/>
+        </svg>
+      </div>
+      <span class="timeline-time">19:00</span>
+      <strong>Cena</strong>
+      <em>Lugar de recepción</em>
+    </div>
+
+    <div class="timeline-connector" aria-hidden="true">
+      <span class="connector-line"></span>
+      <span class="connector-pin">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+      </span>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-icon">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="17" cy="15" rx="8" ry="10"/>
+          <ellipse cx="32" cy="19" rx="6.5" ry="8.5"/>
+          <path d="M17 25 15 40M32 27.5 33 40"/>
+        </svg>
+      </div>
+      <span class="timeline-time">21:30</span>
+      <strong>Fiesta</strong>
+      <em>Lugar de recepción</em>
+    </div>
+
+    <div class="timeline-connector" aria-hidden="true">
+      <span class="connector-line"></span>
+      <span class="connector-pin">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+      </span>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-icon">
+        <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M44 6 6 20l14 4 4 14L44 6z"/>
+          <path d="M4 34c6-2 10-2 16 2" stroke-dasharray="1 5"/>
+        </svg>
+      </div>
+      <span class="timeline-time">03:00</span>
+      <strong>Fin de fiesta</strong>
+      <em>Lugar de recepción</em>
+    </div>
+  </div>
+</section>
+
+<div class="parallax-divider" style="background-image:url('assets/images/parallax-1.jpg')"></div>
+
+<section id="regalos" class="section alt-bg">
+  <div class="section-heading reveal">
+    <span class="icon-badge">
+      <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="8" y="18" width="32" height="22" rx="1"/>
+        <path d="M8 26h32M24 18v22"/>
+        <path d="M24 18c-3-6-12-6-9 0 2 3 9 0 9 0zM24 18c3-6 12-6 9 0-2 3-9 0-9 0z"/>
+      </svg>
+    </span>
+    <h2>Regalos</h2>
+    <p>Nos hace muy felices que nos acompañes en este día. Si quieres regalarnos algo para esta nueva etapa, aquí tienes algunas opciones.</p>
+  </div>
+
+  <div class="gift-card reveal">
+    <h3>Datos para transferencia</h3>
+    <p>Banco: Tu Banco</p>
+    <p>Titular: Nombre Apellido</p>
+    <p>Cuenta: 000-0000000-0</p>
+    <p>RUT / Email: tucorreo@ejemplo.com</p>
+  </div>
+
+  <div class="text-center reveal">
+    <button class="btn btn-solid" id="openGiftList">Ver lista de regalos</button>
+  </div>
+</section>
+
+<div class="modal" id="giftModal">
+  <div class="modal-box">
+    <button class="modal-close" data-close="giftModal">&times;</button>
+    <h3>Lista de regalos</h3>
+    <ul class="gift-list">
+      <li><span>Juego de sábanas</span><a href="#" target="_blank" rel="noopener">Ver enlace</a></li>
+      <li><span>Set de copas</span><a href="#" target="_blank" rel="noopener">Ver enlace</a></li>
+      <li><span>Luna de miel</span><a href="#" target="_blank" rel="noopener">Ver enlace</a></li>
+    </ul>
+  </div>
+</div>
+
+<section id="vestimenta" class="section-fullbleed">
+  <div class="fb-text">
+    <span class="icon-badge reveal">
+      <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6h8l-2 7h-4z"/>
+        <path d="M22 13l-4 23 6 5 6-5-4-23z"/>
+      </svg>
+    </span>
+    <h2 class="reveal">Vestimenta</h2>
+    <p class="fb-subheading reveal">Etiqueta</p>
+    <div class="fb-columns reveal">
+      <div>
+        <strong>Mujeres</strong>
+        <p>Vestido largo</p>
+      </div>
+      <div>
+        <strong>Hombres</strong>
+        <p>Traje formal</p>
+      </div>
+    </div>
+    <p class="fb-subheading reveal">Colores a evitar</p>
+    <div class="color-swatches reveal">
+      <span class="swatch" style="background:#ffffff" title="Blanco"></span>
+      <span class="swatch" style="background:#cfd3d6" title="Gris claro"></span>
+      <span class="swatch" style="background:#f2ecd2" title="Beige"></span>
+    </div>
+  </div>
+  <div class="fb-media reveal">
+    <img src="assets/images/vestimenta.jpg" alt="Vestimenta" loading="lazy">
+  </div>
+</section>
+
+<section id="playlist" class="section-fullbleed">
+  <div class="fb-media reveal">
+    <video src="assets/video/playlist-media.mp4" poster="assets/images/playlist-poster.jpg" muted loop playsinline autoplay></video>
+  </div>
+  <div class="fb-text">
+    <span class="icon-badge reveal">
+      <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="16" cy="34" r="5"/>
+        <circle cx="34" cy="30" r="5"/>
+        <path d="M21 34V12l18-4v22"/>
+      </svg>
+    </span>
+    <h2 class="reveal">Nuestra playlist</h2>
+    <p class="reveal">Queremos un matri bien prendido! Ayúdanos a armar la playlist y sugiere una canción para la fiesta.</p>
+
+    <div class="tabs reveal">
+      <button class="tab-btn active" data-tab="tab-playlist">Playlist</button>
+      <button class="tab-btn" data-tab="tab-sugerencias">Sugerencias (<span id="songCount">0</span>)</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-playlist">
+      <div class="playlist-embed">
+        <iframe title="Playlist de Spotify" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1haYOQUTZg4IE0dGVvI5bj?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <div class="playlist-actions">
+        <button class="btn btn-solid" id="openSongModal">Sugiere una canción</button>
+        <a class="btn btn-outline" href="https://open.spotify.com/playlist/1haYOQUTZg4IE0dGVvI5bj" target="_blank" rel="noopener">Abrir en Spotify</a>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-sugerencias">
+      <ul class="suggestions-list" id="suggestionsList"></ul>
+      <p class="fine-print" id="noSuggestions">Todavía no hay sugerencias. ¡Sé el primero!</p>
+      <div class="text-center">
+        <button class="btn btn-solid" id="openSongModal2">Sugiere una canción</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal" id="songModal">
+  <div class="modal-box">
+    <button class="modal-close" data-close="songModal">&times;</button>
+    <h3>Sugiere una canción</h3>
+    <form id="songForm" class="song-form">
+      <input type="text" id="songInput" placeholder="Nombre de la canción y artista" required>
+      <button type="submit" class="btn btn-solid">Enviar</button>
+    </form>
+  </div>
+</div>
+
+<section id="rsvp" class="section rsvp-bg">
+  <div class="section-heading reveal">
+    <span class="icon-badge">
+      <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="6" y="12" width="36" height="26" rx="2"/>
+        <path d="M7 13l17 14 17-14"/>
+      </svg>
+    </span>
+    <h2>Confirmación</h2>
+    <p id="rsvpDeadline">Por favor confirma tu asistencia antes del 10 de mayo</p>
+  </div>
+
+  <div class="rsvp-card reveal" id="rsvpCard">
+    <div class="rsvp-guest" data-guest="invitado">
+      <input type="text" class="rsvp-name-input" id="guestName" placeholder="Tu nombre" autocomplete="name" required>
+      <div class="rsvp-actions">
+        <button class="rsvp-btn" data-answer="si">Asistiré</button>
+        <button class="rsvp-btn" data-answer="no">No asistiré</button>
+      </div>
+    </div>
+    <div class="rsvp-guest" data-guest="acompanante">
+      <input type="text" class="rsvp-name-input" id="companionName" placeholder="Nombre de tu acompañante (opcional)" autocomplete="off">
+      <div class="rsvp-actions">
+        <button class="rsvp-btn" data-answer="si">Asistirá</button>
+        <button class="rsvp-btn" data-answer="no">No asistirá</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <button class="btn btn-solid reveal" id="confirmRsvp">Confirmar asistencia</button>
+    <p class="fine-print" id="rsvpStatus" style="min-height: 1.2em;"></p>
+  </div>
+</section>
+
+<section id="contacto" class="section split">
+  <div class="split-text">
+    <span class="icon-badge reveal">
+      <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 10c3 0 8 2 8 6 0 3-3 4-3 6s7 11 9 9 3-3 6-3c4 0 6 5 6 8 0 3-2 5-5 5C20 41 7 28 7 15c0-3 2-5 5-5z"/>
+      </svg>
+    </span>
+    <h2 class="reveal">Contáctanos</h2>
+    <p class="reveal">Si tienes alguna duda, no dudes en escribirnos.</p>
+    <div class="contact-buttons reveal">
+      <a class="btn btn-outline" href="https://wa.me/56900000000" target="_blank" rel="noopener">Contactar a Novia</a>
+      <a class="btn btn-outline" href="https://wa.me/56900000000" target="_blank" rel="noopener">Contactar a Novio</a>
+    </div>
+  </div>
+  <div class="split-media reveal">
+    <img src="assets/images/contacto.jpg" alt="Central de invitados" loading="lazy">
+  </div>
+</section>
+
+<section id="galeria" class="section-carousel">
+  <div class="carousel-track">
+    <img src="assets/images/galeria-1.jpg" alt="Galería 1" loading="lazy">
+    <img src="assets/images/galeria-2.jpg" alt="Galería 2" loading="lazy">
+    <img src="assets/images/galeria-3.jpg" alt="Galería 3" loading="lazy">
+    <img src="assets/images/galeria-4.jpg" alt="Galería 4" loading="lazy">
+    <img src="assets/images/galeria-5.jpg" alt="Galería 5" loading="lazy">
+    <img src="assets/images/galeria-1.jpg" alt="Galería 1" loading="lazy" aria-hidden="true">
+    <img src="assets/images/galeria-2.jpg" alt="Galería 2" loading="lazy" aria-hidden="true">
+    <img src="assets/images/galeria-3.jpg" alt="Galería 3" loading="lazy" aria-hidden="true">
+    <img src="assets/images/galeria-4.jpg" alt="Galería 4" loading="lazy" aria-hidden="true">
+    <img src="assets/images/galeria-5.jpg" alt="Galería 5" loading="lazy" aria-hidden="true">
+  </div>
+</section>
+
+<section id="faq" class="section alt-bg">
+  <div class="section-heading reveal">
+    <span class="icon-badge">
+      <svg viewBox="0 0 48 48" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 12h28a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H20l-8 6v-6h-2a4 4 0 0 1-4-4V16a4 4 0 0 1 4-4z"/>
+      </svg>
+    </span>
+    <h2>Preguntas frecuentes</h2>
+  </div>
+
+  <div class="accordion reveal">
+    <div class="accordion-item">
+      <button class="accordion-trigger">¿A qué hora debo llegar?<span class="chevron">⌄</span></button>
+      <div class="accordion-panel"><p>Te recomendamos llegar 15 minutos antes de la hora indicada para la ceremonia.</p></div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">¿Hay estacionamiento disponible?<span class="chevron">⌄</span></button>
+      <div class="accordion-panel"><p>Sí, tanto en el lugar de la ceremonia como en la recepción hay estacionamiento disponible para los invitados.</p></div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">¿Pueden asistir niños?<span class="chevron">⌄</span></button>
+      <div class="accordion-panel"><p>Cuéntanos en tu confirmación cuántos niños asistirán para poder organizar todo de la mejor forma.</p></div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">¿Puedo llevar acompañante?<span class="chevron">⌄</span></button>
+      <div class="accordion-panel"><p>Solo pueden asistir las personas indicadas en tu invitación. Cualquier duda, contáctanos.</p></div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">¿Puedo tomar fotos durante la ceremonia?<span class="chevron">⌄</span></button>
+      <div class="accordion-panel"><p>Preferimos una ceremonia "unplugged": guarda el celular y disfruta el momento, nuestro fotógrafo se encargará de todo.</p></div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">¿Hay opciones vegetarianas/veganas?<span class="chevron">⌄</span></button>
+      <div class="accordion-panel"><p>Sí. Indícanos tu preferencia o restricción alimentaria al confirmar tu asistencia.</p></div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">¿Puedo decir unas palabras durante el matrimonio?<span class="chevron">⌄</span></button>
+      <div class="accordion-panel"><p>Si quieres brindar unas palabras, escríbenos antes para coordinar un espacio en el programa.</p></div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-trigger">¿Cómo estará el clima?<span class="chevron">⌄</span></button>
+      <div class="accordion-panel"><p>Revisa el pronóstico cercano a la fecha y viste acorde, por si acaso.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="script-accent">Hecho con mucho amor</p>
+  <p class="fine-print">Plantilla personal — reemplaza este texto por el tuyo</p>
+</footer>
+
+<script src="js/script.js?v=4"></script>
+</body>
+</html>
