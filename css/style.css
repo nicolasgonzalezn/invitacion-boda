@@ -121,13 +121,15 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
   color: var(--color-bg); margin-bottom: 14px;
 }
 .icon-badge svg { display: block; }
+.icon-badge.icon-badge-img { width: 64px; height: 64px; background: none; }
+.icon-badge-img img { width: 100%; height: 100%; display: block; }
 .section-heading h2 { font-size: 2rem; color: var(--color-primary-dark); margin-bottom: 12px; }
 .section-heading p { max-width: 560px; margin: 0 auto; color: var(--color-text-soft); }
 
-/* Icon badge colors — rotating fill per section (see design rationale) */
-#historia .icon-badge, #regalos .icon-badge { background: var(--color-granada); }
-#evento .icon-badge, #vestimenta .icon-badge { background: var(--color-primary-dark); }
-#faq .icon-badge, #playlist .icon-badge, #contacto .icon-badge, #itinerario .icon-badge { background: var(--color-primary); }
+/* Icon badge colors — rotating fill per section (line-icon badges only; image badges bring their own frame) */
+#historia .icon-badge:not(.icon-badge-img), #regalos .icon-badge:not(.icon-badge-img) { background: var(--color-granada); }
+#evento .icon-badge:not(.icon-badge-img), #vestimenta .icon-badge:not(.icon-badge-img) { background: var(--color-primary-dark); }
+#faq .icon-badge:not(.icon-badge-img), #playlist .icon-badge:not(.icon-badge-img), #contacto .icon-badge:not(.icon-badge-img), #itinerario .icon-badge:not(.icon-badge-img) { background: var(--color-primary); }
 #rsvp .icon-badge { background: var(--color-bronze); color: var(--color-primary-dark); }
 
 /* Split sections */
