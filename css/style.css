@@ -121,7 +121,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
   color: var(--color-bg); margin-bottom: 14px;
 }
 .icon-badge svg { display: block; }
-.icon-badge.icon-badge-img { width: 64px; height: 64px; background: none; }
+.icon-badge.icon-badge-img { width: 78px; height: 78px; background: none; }
 .icon-badge-img img { width: 100%; height: 100%; display: block; }
 .section-heading h2 { font-size: 2rem; color: var(--color-primary-dark); margin-bottom: 12px; }
 .section-heading p { max-width: 560px; margin: 0 auto; color: var(--color-text-soft); }
@@ -240,6 +240,11 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 .timeline { display: flex; align-items: flex-start; justify-content: center; gap: 0; }
 .timeline-item { flex: 0 1 160px; text-align: center; display: flex; flex-direction: column; gap: 4px; }
 .timeline-icon { color: var(--color-primary-dark); margin: 0 auto 10px; width: 40px; height: 40px; }
+.timeline-icon.timeline-icon-img {
+  width: 56px; height: 56px; border-radius: 10px; overflow: hidden;
+  box-shadow: 0 6px 14px rgba(26,46,74,.12);
+}
+.timeline-icon-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .timeline-time { color: var(--color-primary-dark); font-weight: 600; }
 .timeline-item em { color: var(--color-text-soft); font-size: .85rem; }
 
