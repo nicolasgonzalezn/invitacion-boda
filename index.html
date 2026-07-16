@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
 
@@ -243,33 +243,68 @@
       </svg>
     </span>
     <h2>Regalos</h2>
-    <p>Nos hace muy felices que nos acompañes en este día. Si quieres regalarnos algo para esta nueva etapa, aquí tienes algunas opciones.</p>
+    <p>Para nosotros el mejor regalo son las experiencias compartidas. En vez de una lista tradicional, te invitamos a ser parte de las aventuras que soñamos vivir juntos.</p>
   </div>
 
-  <div class="gift-card reveal">
-    <h3>Datos para transferencia</h3>
-    <p>Banco: Tu Banco</p>
-    <p>Titular: Nombre Apellido</p>
-    <p>Cuenta: 000-0000000-0</p>
-    <p>RUT / Email: tucorreo@ejemplo.com</p>
-  </div>
-
-  <div class="text-center reveal">
-    <button class="btn btn-solid" id="openGiftList">Ver lista de regalos</button>
+  <div class="gift-widget reveal">
+    <div class="gift-grid">
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🌅</span>
+        <span class="gift-name">Amanecer en Meteora, Grecia</span>
+        <span class="gift-price">$198.000</span>
+      </a>
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🛡️</span>
+        <span class="gift-name">Ver pelear a un gladiador en el Coliseo, Roma</span>
+        <span class="gift-price">$330.000</span>
+      </a>
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🕌</span>
+        <span class="gift-name">Visita a la Mezquita Azul, Estambul</span>
+        <span class="gift-price">$198.000</span>
+      </a>
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🎈</span>
+        <span class="gift-name">Paseo en globo en Capadocia: la revancha!</span>
+        <span class="gift-price">$275.000</span>
+      </a>
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🍷</span>
+        <span class="gift-name">Cena con vista en Oia, Santorini</span>
+        <span class="gift-price">$165.000</span>
+      </a>
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🌌</span>
+        <span class="gift-name">Astronomía en San Pedro de Atacama</span>
+        <span class="gift-price">$165.000</span>
+      </a>
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🏔️</span>
+        <span class="gift-name">Conocer Torres del Paine</span>
+        <span class="gift-price">$220.000</span>
+      </a>
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🐶</span>
+        <span class="gift-name">Premios y juguetes para Loki</span>
+        <span class="gift-price">$110.000</span>
+      </a>
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🍬</span>
+        <span class="gift-name">Dulces turcos y baklava en Estambul</span>
+        <span class="gift-price">$44.000</span>
+      </a>
+      <a class="gift-item" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">
+        <span class="gift-emoji">🚀</span>
+        <span class="gift-name">Viajar al espacio</span>
+        <span class="gift-price">$1.000.000</span>
+      </a>
+    </div>
+    <p class="fine-print">+ 47 experiencias más te esperan en la lista completa</p>
+    <div class="text-center">
+      <a class="btn btn-solid" href="https://milistadenovios.cl/lista/nicoynathi" target="_blank" rel="noopener">Ver lista completa y regalar</a>
+    </div>
   </div>
 </section>
-
-<div class="modal" id="giftModal">
-  <div class="modal-box">
-    <button class="modal-close" data-close="giftModal">&times;</button>
-    <h3>Lista de regalos</h3>
-    <ul class="gift-list">
-      <li><span>Juego de sábanas</span><a href="#" target="_blank" rel="noopener">Ver enlace</a></li>
-      <li><span>Set de copas</span><a href="#" target="_blank" rel="noopener">Ver enlace</a></li>
-      <li><span>Luna de miel</span><a href="#" target="_blank" rel="noopener">Ver enlace</a></li>
-    </ul>
-  </div>
-</div>
 
 <section id="vestimenta" class="section-fullbleed">
   <div class="fb-text">
@@ -474,6 +509,6 @@
   <p class="fine-print">Plantilla personal — reemplaza este texto por el tuyo</p>
 </footer>
 
-<script src="js/script.js?v=4"></script>
+<script src="js/script.js?v=5"></script>
 </body>
 </html>

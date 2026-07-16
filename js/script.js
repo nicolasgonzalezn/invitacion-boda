@@ -158,10 +158,7 @@ function closeLightbox() {
 lightboxClose.addEventListener('click', closeLightbox);
 lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
 
-// ---- Gift list modal ----
-document.getElementById('openGiftList').addEventListener('click', () => {
-  document.getElementById('giftModal').classList.add('open');
-});
+// ---- Modal close (shared by song-suggestion modal) ----
 document.querySelectorAll('[data-close]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.getElementById(btn.dataset.close).classList.remove('open');

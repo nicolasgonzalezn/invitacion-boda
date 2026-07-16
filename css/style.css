@@ -268,12 +268,18 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 @media (max-width: 780px) { .parallax-divider { background-attachment: scroll; } }
 
 /* Gifts */
-.gift-card {
-  background: #fff; max-width: 420px; margin: 0 auto 30px; padding: 26px; border-radius: var(--radius);
-  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+.gift-widget { max-width: 920px; margin: 0 auto; }
+.gift-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; margin-bottom: 22px; }
+.gift-item {
+  background: #fff; border-radius: var(--radius); padding: 20px 12px; text-align: center;
+  text-decoration: none; box-shadow: 0 8px 20px rgba(0,0,0,.06);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  transition: transform .25s ease, box-shadow .25s ease;
 }
-.gift-card h3 { color: var(--color-primary-dark); margin-bottom: 10px; }
-.gift-card p { margin: 4px 0; color: var(--color-text-dark); }
+.gift-item:hover { transform: translateY(-5px); box-shadow: 0 16px 28px rgba(0,0,0,.12); }
+.gift-emoji { font-size: 1.8rem; }
+.gift-name { color: var(--color-primary-dark); font-family: var(--font-heading); font-size: .88rem; line-height: 1.3; min-height: 2.5em; }
+.gift-price { color: var(--color-primary); font-weight: 600; font-size: .82rem; letter-spacing: .3px; }
 
 .modal {
   display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 900;
@@ -283,9 +289,6 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 .modal-box { background: #fff; border-radius: var(--radius); padding: 30px; max-width: 420px; width: 100%; position: relative; color: var(--color-text-dark); }
 .modal-box h3 { color: var(--color-primary-dark); }
 .modal-close { position: absolute; top: 10px; right: 16px; background: none; border: none; font-size: 1.6rem; cursor: pointer; color: var(--color-text-dark); }
-.gift-list { list-style: none; padding: 0; margin: 16px 0 0; }
-.gift-list li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--color-bg-alt); }
-.gift-list a { color: var(--color-primary-dark); }
 
 /* Playlist */
 .playlist-embed { max-width: 500px; margin: 0 auto 26px; }
