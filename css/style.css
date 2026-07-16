@@ -98,7 +98,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
   color: #fff; text-decoration: none; font-size: .75rem; letter-spacing: 1px; text-transform: uppercase;
   animation: bounce 2s infinite;
 }
-@keyframes bounce { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(6px);} }
+@keyframes bounce { 0%,100%{ transform: translateX(-50%) translateY(0);} 50%{ transform: translateX(-50%) translateY(6px);} }
 
 /* Music toggle */
 .music-toggle {
@@ -130,7 +130,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 #historia .icon-badge:not(.icon-badge-img), #regalos .icon-badge:not(.icon-badge-img) { background: var(--color-granada); }
 #evento .icon-badge:not(.icon-badge-img), #vestimenta .icon-badge:not(.icon-badge-img) { background: var(--color-primary-dark); }
 #faq .icon-badge:not(.icon-badge-img), #playlist .icon-badge:not(.icon-badge-img), #contacto .icon-badge:not(.icon-badge-img), #itinerario .icon-badge:not(.icon-badge-img) { background: var(--color-primary); }
-#rsvp .icon-badge { background: var(--color-bronze); color: var(--color-primary-dark); }
+#rsvp .icon-badge:not(.icon-badge-img) { background: var(--color-bronze); color: var(--color-primary-dark); }
 
 /* Split sections */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
@@ -206,8 +206,10 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
   height: 300px; width: auto; object-fit: cover; margin-right: 10px;
   filter: sepia(.45) saturate(1.15) contrast(1.05); transition: filter .3s ease;
 }
-.carousel-track img:hover { filter: none; }
-.section-carousel:hover .carousel-track { animation-play-state: paused; }
+@media (hover: hover) and (pointer: fine) {
+  .carousel-track img:hover { filter: none; }
+  .section-carousel:hover .carousel-track { animation-play-state: paused; }
+}
 @keyframes carousel-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (max-width: 780px) { .carousel-track img { height: 200px; } }
 
