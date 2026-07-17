@@ -166,11 +166,32 @@ document.querySelectorAll('[data-close]').forEach(btn => {
 });
 
 // ---- Playlist autoplay on scroll into view ----
+// Browsers block audio autoplay unless triggered within a real user gesture — a scroll
+// alone never counts. We track the first tap/click/keypress anywhere on the page (on
+// mobile, the touchstart that kicks off a scroll already counts) and only append
+// autoplay=1 once both that gesture and the section's visibility have happened.
 const playlistIframe = document.querySelector('.playlist-embed iframe');
+let userHasInteracted = false;
+let playlistIsVisible = false;
+
+function tryPlaylistAutoplay() {
+  if (userHasInteracted && playlistIsVisible && !playlistIframe.src.includes('autoplay=1')) {
+    playlistIframe.src += (playlistIframe.src.includes('?') ? '&' : '?') + 'autoplay=1';
+  }
+}
+
+['click', 'touchstart', 'keydown'].forEach(evt => {
+  document.addEventListener(evt, () => {
+    userHasInteracted = true;
+    tryPlaylistAutoplay();
+  }, { once: true, passive: true });
+});
+
 const playlistObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      playlistIframe.src += (playlistIframe.src.includes('?') ? '&' : '?') + 'autoplay=1';
+      playlistIsVisible = true;
+      tryPlaylistAutoplay();
       playlistObserver.unobserve(entry.target);
     }
   });
