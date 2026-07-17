@@ -1,11 +1,22 @@
 // ---- Config ----
 const WEDDING_DATE = new Date('2026-12-12T17:00:00');
 
-// ---- Loader ----
+// ---- Loader / entry gate ----
+// Browsers never allow audio-with-sound to autoplay on page load or on scroll —
+// every real site that opens with music (this one included) needs one genuine
+// tap/click to unlock it. So the loader becomes a "tap to enter" gate once the
+// page is ready: that single click both reveals the invitation and starts the
+// background track, in the same trusted gesture.
 window.addEventListener('load', () => {
+  document.getElementById('loaderLoading').style.display = 'none';
+  document.getElementById('enterButton').style.display = 'flex';
+});
+
+document.getElementById('enterButton').addEventListener('click', () => {
   const loader = document.getElementById('loader');
   loader.classList.add('hidden');
   setTimeout(() => loader.remove(), 700);
+  attemptBgAudioAutostart();
 });
 
 // ---- Navbar scroll state + mobile toggle ----
