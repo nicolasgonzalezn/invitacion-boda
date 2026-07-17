@@ -151,18 +151,25 @@ function setMusicIcon(isPlaying) {
 // triggers firing off the same event — e.g. clicking the floating button, which
 // bubbles into the document-level listener too — can't both call play() and race
 // each other's currentTime seek.
+//
+// iOS Safari in particular ignores currentTime assignments made before playback
+// has actually begun (silently resets to 0), which was making the track start
+// at 0:00 regardless of the seek. So we play first, muted, then seek once the
+// play() promise confirms playback has genuinely started, then unmute — the
+// guest never hears the wrong starting point.
 function attemptBgAudioAutostart() {
   if (bgAudioStarted) return;
   bgAudioStarted = true;
-  function playFromStart() {
-    bgAudio.currentTime = BG_AUDIO_START;
-    bgAudio.play().catch(() => { bgAudioStarted = false; });
-  }
-  if (bgAudio.readyState >= 1) {
-    playFromStart();
-  } else {
-    bgAudio.addEventListener('loadedmetadata', playFromStart, { once: true });
-  }
+  bgAudio.muted = true;
+  bgAudio.play()
+    .then(() => {
+      bgAudio.currentTime = BG_AUDIO_START;
+      bgAudio.muted = false;
+    })
+    .catch(() => {
+      bgAudioStarted = false;
+      bgAudio.muted = false;
+    });
 }
 
 bgAudio.addEventListener('ended', () => {

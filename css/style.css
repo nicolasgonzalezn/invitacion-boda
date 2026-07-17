@@ -279,10 +279,10 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 
 /* Parallax divider — JS-driven transform parallax (works on mobile, unlike
    background-attachment:fixed which iOS Safari doesn't support) */
-.parallax-divider { height: 40vh; min-height: 260px; overflow: hidden; position: relative; }
+.parallax-divider { height: 55vh; min-height: 340px; overflow: hidden; position: relative; }
 .parallax-img {
   position: absolute; top: 50%; left: 50%; width: 100%; height: 160%;
-  object-fit: cover; transform: translate(-50%, -50%); will-change: transform;
+  object-fit: cover; object-position: center bottom; transform: translate(-50%, -50%); will-change: transform;
 }
 
 /* Gifts — compact referential chips, not detailed cards */
