@@ -144,6 +144,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 #evento .icon-badge:not(.icon-badge-img), #vestimenta .icon-badge:not(.icon-badge-img) { background: var(--color-primary-dark); }
 #faq .icon-badge:not(.icon-badge-img), #playlist .icon-badge:not(.icon-badge-img), #contacto .icon-badge:not(.icon-badge-img), #itinerario .icon-badge:not(.icon-badge-img) { background: var(--color-primary); }
 #rsvp .icon-badge:not(.icon-badge-img) { background: var(--color-bronze); color: var(--color-primary-dark); }
+#rsvp .section-heading h2 { color: #fff; }
 
 /* Split sections */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
