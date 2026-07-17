@@ -121,23 +121,132 @@ const confettiObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 confettiObserver.observe(document.getElementById('itinerario'));
 
-// ---- Background music toggle ----
+// ---- Background music + Spotify handoff ----
+// The floating button controls whichever source is "current": the local bg track
+// while browsing the invitation, then the Spotify playlist once the guest scrolls
+// to the Playlist section (bg track pauses, Spotify starts).
 const musicToggle = document.getElementById('musicToggle');
-const bgAudio = document.getElementById('bgAudio');
 const iconPlay = document.getElementById('iconPlay');
 const iconPause = document.getElementById('iconPause');
-let playing = false;
+const bgAudio = document.getElementById('bgAudio');
+const BG_AUDIO_START = 64; // 1:04
+const SPOTIFY_PLAYLIST_URI = 'spotify:playlist:1haYOQUTZg4IE0dGVvI5bj';
+
+let audioSource = 'bg'; // 'bg' | 'spotify'
+let bgAudioStarted = false;
+let spotifyController = null;
+let spotifyShouldAutoplay = false;
+
+function setMusicIcon(isPlaying) {
+  iconPlay.style.display = isPlaying ? 'none' : 'block';
+  iconPause.style.display = isPlaying ? 'block' : 'none';
+}
+
+// Browsers block audio autoplay without a user gesture. We try immediately when
+// the invitation opens, and silently fall back to starting on the guest's first
+// tap/click/keypress anywhere on the page if that initial attempt gets blocked.
+// currentTime can only be set once metadata has loaded — setting it earlier is
+// silently ignored, which was resetting playback back to 0:00.
+function attemptBgAudioAutostart() {
+  if (bgAudioStarted) return;
+  function playFromStart() {
+    if (bgAudioStarted) return;
+    bgAudio.currentTime = BG_AUDIO_START;
+    bgAudio.play().then(() => { bgAudioStarted = true; }).catch(() => {});
+  }
+  if (bgAudio.readyState >= 1) {
+    playFromStart();
+  } else {
+    bgAudio.addEventListener('loadedmetadata', playFromStart, { once: true });
+  }
+}
+
+bgAudio.addEventListener('ended', () => {
+  bgAudio.currentTime = BG_AUDIO_START;
+  bgAudio.play();
+});
+bgAudio.addEventListener('play', () => { if (audioSource === 'bg') setMusicIcon(true); });
+bgAudio.addEventListener('pause', () => { if (audioSource === 'bg') setMusicIcon(false); });
+
+window.addEventListener('load', attemptBgAudioAutostart);
+['click', 'touchstart', 'keydown'].forEach(evt => {
+  document.addEventListener(evt, attemptBgAudioAutostart, { once: true, passive: true });
+});
+
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  IFrameAPI.createController(
+    document.getElementById('spotifyEmbed'),
+    { uri: SPOTIFY_PLAYLIST_URI, width: '100%', height: '352' },
+    (EmbedController) => {
+      spotifyController = EmbedController;
+      spotifyController.addListener('playback_update', (e) => {
+        if (audioSource === 'spotify') setMusicIcon(!e.data.isPaused);
+      });
+      if (spotifyShouldAutoplay) {
+        spotifyShouldAutoplay = false;
+        spotifyController.play();
+      }
+    }
+  );
+};
 
 musicToggle.addEventListener('click', () => {
-  if (playing) {
-    bgAudio.pause();
-  } else {
-    bgAudio.play().catch(() => {});
+  if (audioSource === 'bg') {
+    if (bgAudio.paused) {
+      bgAudio.play().catch(() => {});
+    } else {
+      bgAudio.pause();
+    }
+  } else if (spotifyController) {
+    spotifyController.togglePlay();
   }
-  playing = !playing;
-  iconPlay.style.display = playing ? 'none' : 'block';
-  iconPause.style.display = playing ? 'block' : 'none';
 });
+
+const playlistHandoffObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      audioSource = 'spotify';
+      bgAudio.pause();
+      if (spotifyController) {
+        spotifyController.play();
+      } else {
+        spotifyShouldAutoplay = true;
+      }
+      playlistHandoffObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+playlistHandoffObserver.observe(document.getElementById('playlist'));
+
+// ---- Parallax divider (JS transform, works on mobile unlike background-attachment:fixed) ----
+const parallaxDivider = document.getElementById('parallaxDivider');
+const parallaxImg = parallaxDivider ? parallaxDivider.querySelector('.parallax-img') : null;
+if (parallaxImg) {
+  const PARALLAX_SPEED = 0.15;
+  let parallaxTicking = false;
+
+  function updateParallax() {
+    const rect = parallaxDivider.getBoundingClientRect();
+    parallaxTicking = false;
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    const center = rect.top + rect.height / 2;
+    const rawOffset = (window.innerHeight / 2 - center) * PARALLAX_SPEED;
+    const maxOffset = rect.height * 0.25;
+    const offset = Math.max(-maxOffset, Math.min(maxOffset, rawOffset));
+    parallaxImg.style.transform = `translate(-50%, calc(-50% + ${offset}px))`;
+  }
+
+  function onParallaxScroll() {
+    if (!parallaxTicking) {
+      requestAnimationFrame(updateParallax);
+      parallaxTicking = true;
+    }
+  }
+
+  window.addEventListener('scroll', onParallaxScroll, { passive: true });
+  window.addEventListener('resize', onParallaxScroll);
+  updateParallax();
+}
 
 // ---- Gallery carousel lightbox ----
 const lightbox = document.getElementById('lightbox');
@@ -164,39 +273,6 @@ document.querySelectorAll('[data-close]').forEach(btn => {
     document.getElementById(btn.dataset.close).classList.remove('open');
   });
 });
-
-// ---- Playlist autoplay on scroll into view ----
-// Browsers block audio autoplay unless triggered within a real user gesture — a scroll
-// alone never counts. We track the first tap/click/keypress anywhere on the page (on
-// mobile, the touchstart that kicks off a scroll already counts) and only append
-// autoplay=1 once both that gesture and the section's visibility have happened.
-const playlistIframe = document.querySelector('.playlist-embed iframe');
-let userHasInteracted = false;
-let playlistIsVisible = false;
-
-function tryPlaylistAutoplay() {
-  if (userHasInteracted && playlistIsVisible && !playlistIframe.src.includes('autoplay=1')) {
-    playlistIframe.src += (playlistIframe.src.includes('?') ? '&' : '?') + 'autoplay=1';
-  }
-}
-
-['click', 'touchstart', 'keydown'].forEach(evt => {
-  document.addEventListener(evt, () => {
-    userHasInteracted = true;
-    tryPlaylistAutoplay();
-  }, { once: true, passive: true });
-});
-
-const playlistObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      playlistIsVisible = true;
-      tryPlaylistAutoplay();
-      playlistObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.5 });
-playlistObserver.observe(document.getElementById('playlist'));
 
 // ---- Playlist tabs ----
 document.querySelectorAll('.tab-btn').forEach(tabBtn => {

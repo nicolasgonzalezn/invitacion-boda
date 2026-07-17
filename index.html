@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=16">
+<link rel="stylesheet" href="css/style.css?v=19">
 </head>
 <body>
 
@@ -39,7 +39,7 @@
 </nav>
 
 <header id="hero">
-  <img class="hero-media" src="assets/images/hero-poster.jpg" alt="Nico & Nathi">
+  <img class="hero-media" src="assets/images/hero-poster.jpg?v=2" alt="Nico & Nathi">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="eyebrow reveal">¡Nos casamos!</p>
@@ -64,7 +64,7 @@
   <svg id="iconPlay" viewBox="0 0 24 24" width="18" height="18"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
   <svg id="iconPause" viewBox="0 0 24 24" width="18" height="18" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z" fill="currentColor"/></svg>
 </button>
-<audio id="bgAudio" loop preload="none">
+<audio id="bgAudio" preload="auto">
   <source src="assets/audio/background-song.mp3" type="audio/mpeg">
 </audio>
 
@@ -113,7 +113,7 @@
 <section id="itinerario" class="section">
   <div class="section-heading reveal">
     <span class="icon-badge icon-badge-img">
-      <img src="assets/icons/itinerario.png" alt="Itinerario">
+      <img src="assets/icons/itinerario.png?v=2" alt="Itinerario">
     </span>
     <h2>Itinerario</h2>
   </div>
@@ -177,7 +177,9 @@
   </div>
 </section>
 
-<div class="parallax-divider" style="background-image:url('assets/images/parallax-1.jpg')"></div>
+<div class="parallax-divider" id="parallaxDivider">
+  <img src="assets/images/parallax-1.jpg?v=2" alt="" class="parallax-img">
+</div>
 
 <section id="regalos" class="section alt-bg">
   <div class="section-heading reveal">
@@ -261,7 +263,7 @@
 
     <div class="tab-panel active" id="tab-playlist">
       <div class="playlist-embed">
-        <iframe title="Playlist de Spotify" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1haYOQUTZg4IE0dGVvI5bj?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div id="spotifyEmbed"></div>
       </div>
       <div class="playlist-actions">
         <button class="btn btn-solid" id="openSongModal">Sugiere una canción</button>
@@ -293,7 +295,7 @@
 <section id="rsvp" class="section rsvp-bg">
   <div class="section-heading reveal">
     <span class="icon-badge icon-badge-img">
-      <img src="assets/icons/rsvp.png" alt="Confirmación">
+      <img src="assets/icons/rsvp.png?v=2" alt="Confirmación">
     </span>
     <h2>Confirmación</h2>
     <p id="rsvpDeadline">Por favor confirma tu asistencia antes del 10 de mayo</p>
@@ -335,7 +337,7 @@
     </div>
   </div>
   <div class="split-media reveal">
-    <img src="assets/images/contacto.jpg" alt="Central de invitados" loading="lazy">
+    <img src="assets/images/contacto.jpg?v=2" alt="Central de invitados" loading="lazy">
   </div>
 </section>
 
@@ -403,6 +405,7 @@
   <p class="fine-print">Plantilla personal — reemplaza este texto por el tuyo</p>
 </footer>
 
-<script src="js/script.js?v=16"></script>
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+<script src="js/script.js?v=20"></script>
 </body>
 </html>
