@@ -142,17 +142,21 @@ function setMusicIcon(isPlaying) {
   iconPause.style.display = isPlaying ? 'block' : 'none';
 }
 
-// Browsers block audio autoplay without a user gesture. We try immediately when
-// the invitation opens, and silently fall back to starting on the guest's first
-// tap/click/keypress anywhere on the page if that initial attempt gets blocked.
-// currentTime can only be set once metadata has loaded — setting it earlier is
-// silently ignored, which was resetting playback back to 0:00.
+// Browsers block audio autoplay without a user gesture (a scroll never counts —
+// only click/tap/key input does, and on desktop that means mouse-wheel-only
+// browsing never triggers it until the guest actually clicks something). We try
+// immediately when the invitation opens, and fall back to the guest's first
+// qualifying interaction anywhere on the page if that initial attempt is blocked.
+// bgAudioStarted is claimed synchronously (not inside the play() promise) so two
+// triggers firing off the same event — e.g. clicking the floating button, which
+// bubbles into the document-level listener too — can't both call play() and race
+// each other's currentTime seek.
 function attemptBgAudioAutostart() {
   if (bgAudioStarted) return;
+  bgAudioStarted = true;
   function playFromStart() {
-    if (bgAudioStarted) return;
     bgAudio.currentTime = BG_AUDIO_START;
-    bgAudio.play().then(() => { bgAudioStarted = true; }).catch(() => {});
+    bgAudio.play().catch(() => { bgAudioStarted = false; });
   }
   if (bgAudio.readyState >= 1) {
     playFromStart();
@@ -169,7 +173,7 @@ bgAudio.addEventListener('play', () => { if (audioSource === 'bg') setMusicIcon(
 bgAudio.addEventListener('pause', () => { if (audioSource === 'bg') setMusicIcon(false); });
 
 window.addEventListener('load', attemptBgAudioAutostart);
-['click', 'touchstart', 'keydown'].forEach(evt => {
+['pointerdown', 'mousedown', 'touchend', 'keydown', 'click', 'wheel'].forEach(evt => {
   document.addEventListener(evt, attemptBgAudioAutostart, { once: true, passive: true });
 });
 
@@ -192,7 +196,9 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
 
 musicToggle.addEventListener('click', () => {
   if (audioSource === 'bg') {
-    if (bgAudio.paused) {
+    if (!bgAudioStarted) {
+      attemptBgAudioAutostart();
+    } else if (bgAudio.paused) {
       bgAudio.play().catch(() => {});
     } else {
       bgAudio.pause();
