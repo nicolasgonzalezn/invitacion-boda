@@ -51,7 +51,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
   background: none; border: none; cursor: pointer; color: var(--color-primary-dark);
   font-family: var(--font-body); padding: 0;
 }
-.enter-crest { width: 150px; height: auto; margin-bottom: 4px; }
+.enter-crest { width: 320px; max-width: 80vw; height: auto; margin-bottom: 4px; }
 .enter-names { font-size: 2.4rem; color: var(--color-primary-dark); }
 .enter-cta {
   font-size: .78rem; letter-spacing: 2px; text-transform: uppercase;
