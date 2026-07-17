@@ -132,115 +132,56 @@ const confettiObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 confettiObserver.observe(document.getElementById('itinerario'));
 
-// ---- Background music + Spotify handoff ----
-// The floating button controls whichever source is "current": the local bg track
-// while browsing the invitation, then the Spotify playlist once the guest scrolls
-// to the Playlist section (bg track pauses, Spotify starts).
+// ---- Background music (floating button controls this, and only this) ----
 const musicToggle = document.getElementById('musicToggle');
 const iconPlay = document.getElementById('iconPlay');
 const iconPause = document.getElementById('iconPause');
 const bgAudio = document.getElementById('bgAudio');
 const BG_AUDIO_START = 64; // 1:04
-const SPOTIFY_PLAYLIST_URI = 'spotify:playlist:1haYOQUTZg4IE0dGVvI5bj';
 
-let audioSource = 'bg'; // 'bg' | 'spotify'
 let bgAudioStarted = false;
-let spotifyController = null;
-let spotifyShouldAutoplay = false;
 
 function setMusicIcon(isPlaying) {
   iconPlay.style.display = isPlaying ? 'none' : 'block';
   iconPause.style.display = isPlaying ? 'block' : 'none';
 }
 
-// Browsers block audio autoplay without a user gesture (a scroll never counts —
-// only click/tap/key input does, and on desktop that means mouse-wheel-only
-// browsing never triggers it until the guest actually clicks something). We try
-// immediately when the invitation opens, and fall back to the guest's first
-// qualifying interaction anywhere on the page if that initial attempt is blocked.
-// bgAudioStarted is claimed synchronously (not inside the play() promise) so two
-// triggers firing off the same event — e.g. clicking the floating button, which
-// bubbles into the document-level listener too — can't both call play() and race
-// each other's currentTime seek.
-//
-// iOS Safari in particular ignores currentTime assignments made before playback
-// has actually begun (silently resets to 0), which was making the track start
-// at 0:00 regardless of the seek. So we play first, muted, then seek once the
-// play() promise confirms playback has genuinely started, then unmute — the
-// guest never hears the wrong starting point.
+// Browsers block audio autoplay without a user gesture. bgAudioStarted is claimed
+// synchronously (not inside the play() promise) so two triggers firing off the
+// same event can't both call play() and race each other's currentTime seek.
+// currentTime is set on the 'playing' event (playback has genuinely begun) rather
+// than on the play() promise resolving, since on iOS Safari a seek made any
+// earlier is silently ignored and playback keeps going from 0:00.
 function attemptBgAudioAutostart() {
   if (bgAudioStarted) return;
   bgAudioStarted = true;
-  bgAudio.muted = true;
-  bgAudio.play()
-    .then(() => {
-      bgAudio.currentTime = BG_AUDIO_START;
-      bgAudio.muted = false;
-    })
-    .catch(() => {
-      bgAudioStarted = false;
-      bgAudio.muted = false;
-    });
+  bgAudio.addEventListener('playing', () => {
+    bgAudio.currentTime = BG_AUDIO_START;
+  }, { once: true });
+  bgAudio.play().catch(() => { bgAudioStarted = false; });
 }
 
 bgAudio.addEventListener('ended', () => {
   bgAudio.currentTime = BG_AUDIO_START;
   bgAudio.play();
 });
-bgAudio.addEventListener('play', () => { if (audioSource === 'bg') setMusicIcon(true); });
-bgAudio.addEventListener('pause', () => { if (audioSource === 'bg') setMusicIcon(false); });
+bgAudio.addEventListener('play', () => setMusicIcon(true));
+bgAudio.addEventListener('pause', () => setMusicIcon(false));
 
 window.addEventListener('load', attemptBgAudioAutostart);
 ['pointerdown', 'mousedown', 'touchend', 'keydown', 'click', 'wheel'].forEach(evt => {
   document.addEventListener(evt, attemptBgAudioAutostart, { once: true, passive: true });
 });
 
-window.onSpotifyIframeApiReady = (IFrameAPI) => {
-  IFrameAPI.createController(
-    document.getElementById('spotifyEmbed'),
-    { uri: SPOTIFY_PLAYLIST_URI, width: '100%', height: '352' },
-    (EmbedController) => {
-      spotifyController = EmbedController;
-      spotifyController.addListener('playback_update', (e) => {
-        if (audioSource === 'spotify') setMusicIcon(!e.data.isPaused);
-      });
-      if (spotifyShouldAutoplay) {
-        spotifyShouldAutoplay = false;
-        spotifyController.play();
-      }
-    }
-  );
-};
-
 musicToggle.addEventListener('click', () => {
-  if (audioSource === 'bg') {
-    if (!bgAudioStarted) {
-      attemptBgAudioAutostart();
-    } else if (bgAudio.paused) {
-      bgAudio.play().catch(() => {});
-    } else {
-      bgAudio.pause();
-    }
-  } else if (spotifyController) {
-    spotifyController.togglePlay();
+  if (!bgAudioStarted) {
+    attemptBgAudioAutostart();
+  } else if (bgAudio.paused) {
+    bgAudio.play().catch(() => {});
+  } else {
+    bgAudio.pause();
   }
 });
-
-const playlistHandoffObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      audioSource = 'spotify';
-      bgAudio.pause();
-      if (spotifyController) {
-        spotifyController.play();
-      } else {
-        spotifyShouldAutoplay = true;
-      }
-      playlistHandoffObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.5 });
-playlistHandoffObserver.observe(document.getElementById('playlist'));
 
 // ---- Parallax divider (JS transform, works on mobile unlike background-attachment:fixed) ----
 const parallaxDivider = document.getElementById('parallaxDivider');
