@@ -165,6 +165,18 @@ document.querySelectorAll('[data-close]').forEach(btn => {
   });
 });
 
+// ---- Playlist autoplay on scroll into view ----
+const playlistIframe = document.querySelector('.playlist-embed iframe');
+const playlistObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      playlistIframe.src += (playlistIframe.src.includes('?') ? '&' : '?') + 'autoplay=1';
+      playlistObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+playlistObserver.observe(document.getElementById('playlist'));
+
 // ---- Playlist tabs ----
 document.querySelectorAll('.tab-btn').forEach(tabBtn => {
   tabBtn.addEventListener('click', () => {

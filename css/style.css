@@ -140,11 +140,11 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 .split-text h2 { font-size: 2rem; color: var(--color-primary-dark); margin: 10px 0 18px; }
 .split-text p { color: var(--color-text-soft); line-height: 1.7; }
 .split-text > .icon-badge { display: flex; margin-left: auto; margin-right: auto; }
-#contacto .split-media img { height: 600px; object-fit: contain; background: var(--color-bg); }
+#contacto .split-media img { height: 460px; object-fit: contain; background: var(--color-bg); }
 @media (max-width: 780px) {
   .split, .split.reverse { grid-template-columns: 1fr; direction: ltr; }
   .split-media img { height: 280px; }
-  #contacto .split-media img { height: 440px; }
+  #contacto .split-media img { height: 340px; }
 }
 
 /* Full-bleed split sections (Vestimenta, Playlist) */
