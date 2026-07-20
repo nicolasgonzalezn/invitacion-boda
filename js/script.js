@@ -194,36 +194,6 @@ musicToggle.addEventListener('click', () => {
   }
 });
 
-// ---- Parallax divider (JS transform, works on mobile unlike background-attachment:fixed) ----
-const parallaxDivider = document.getElementById('parallaxDivider');
-const parallaxImg = parallaxDivider ? parallaxDivider.querySelector('.parallax-img') : null;
-if (parallaxImg) {
-  const PARALLAX_SPEED = 0.15;
-  let parallaxTicking = false;
-
-  function updateParallax() {
-    const rect = parallaxDivider.getBoundingClientRect();
-    parallaxTicking = false;
-    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-    const center = rect.top + rect.height / 2;
-    const rawOffset = (window.innerHeight / 2 - center) * PARALLAX_SPEED;
-    const maxOffset = rect.height * 0.25;
-    const offset = Math.max(-maxOffset, Math.min(maxOffset, rawOffset));
-    parallaxImg.style.transform = `translate(-50%, calc(-50% + ${offset}px))`;
-  }
-
-  function onParallaxScroll() {
-    if (!parallaxTicking) {
-      requestAnimationFrame(updateParallax);
-      parallaxTicking = true;
-    }
-  }
-
-  window.addEventListener('scroll', onParallaxScroll, { passive: true });
-  window.addEventListener('resize', onParallaxScroll);
-  updateParallax();
-}
-
 // ---- Gallery carousel lightbox ----
 const lightbox = document.getElementById('lightbox');
 const lightboxContent = document.getElementById('lightboxContent');
