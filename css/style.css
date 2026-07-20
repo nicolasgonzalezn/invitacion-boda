@@ -234,6 +234,21 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 .lightbox.open { display: flex; }
 .lightbox-content img, .lightbox-content video { max-width: 90vw; max-height: 85vh; border-radius: 8px; }
 .lightbox-close { position: absolute; top: 20px; right: 26px; background: none; border: none; color: #fff; font-size: 2rem; cursor: pointer; }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,.12); border: none; color: #fff; font-size: 1.3rem;
+  width: 48px; height: 48px; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s ease;
+}
+.lightbox-nav:hover { background: rgba(255,255,255,.25); }
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+@media (max-width: 600px) {
+  .lightbox-nav { width: 40px; height: 40px; font-size: 1.05rem; }
+  .lightbox-prev { left: 6px; }
+  .lightbox-next { right: 6px; }
+}
 
 /* Event cards */
 .cards-row { display: flex; justify-content: center; gap: 26px; }

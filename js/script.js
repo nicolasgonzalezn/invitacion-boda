@@ -194,17 +194,34 @@ musicToggle.addEventListener('click', () => {
   }
 });
 
-// ---- Gallery carousel lightbox ----
+// ---- Gallery carousel lightbox (with prev/next through that carousel's photos) ----
 const lightbox = document.getElementById('lightbox');
 const lightboxContent = document.getElementById('lightboxContent');
 const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
 
-document.querySelectorAll('.carousel-track img').forEach(img => {
-  img.addEventListener('click', () => {
-    lightboxContent.innerHTML = `<img src="${img.src}" alt="">`;
-    lightbox.classList.add('open');
+let currentGallery = [];
+let currentIndex = 0;
+
+function showLightboxImage(index) {
+  currentIndex = (index + currentGallery.length) % currentGallery.length;
+  lightboxContent.innerHTML = `<img src="${currentGallery[currentIndex]}" alt="">`;
+}
+
+document.querySelectorAll('.section-carousel').forEach(section => {
+  const gallery = [...section.querySelectorAll('.carousel-track img:not([aria-hidden])')].map(img => img.src);
+  section.querySelectorAll('.carousel-track img').forEach(img => {
+    img.addEventListener('click', () => {
+      currentGallery = gallery;
+      showLightboxImage(gallery.indexOf(img.src));
+      lightbox.classList.add('open');
+    });
   });
 });
+
+lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); showLightboxImage(currentIndex - 1); });
+lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); showLightboxImage(currentIndex + 1); });
 
 function closeLightbox() {
   lightbox.classList.remove('open');
@@ -212,6 +229,13 @@ function closeLightbox() {
 }
 lightboxClose.addEventListener('click', closeLightbox);
 lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') showLightboxImage(currentIndex - 1);
+  else if (e.key === 'ArrowRight') showLightboxImage(currentIndex + 1);
+  else if (e.key === 'Escape') closeLightbox();
+});
 
 // ---- Modal close (shared by song-suggestion modal) ----
 document.querySelectorAll('[data-close]').forEach(btn => {
