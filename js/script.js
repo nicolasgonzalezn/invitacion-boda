@@ -237,58 +237,6 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === 'Escape') closeLightbox();
 });
 
-// ---- Modal close (shared by song-suggestion modal) ----
-document.querySelectorAll('[data-close]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.getElementById(btn.dataset.close).classList.remove('open');
-  });
-});
-
-// ---- Playlist tabs ----
-document.querySelectorAll('.tab-btn').forEach(tabBtn => {
-  tabBtn.addEventListener('click', () => {
-    const container = tabBtn.closest('.fb-text');
-    container.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    container.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    tabBtn.classList.add('active');
-    document.getElementById(tabBtn.dataset.tab).classList.add('active');
-  });
-});
-
-// ---- Song suggestions (stored locally) ----
-const songForm = document.getElementById('songForm');
-const songCountEl = document.getElementById('songCount');
-const suggestionsList = document.getElementById('suggestionsList');
-const noSuggestions = document.getElementById('noSuggestions');
-const songModal = document.getElementById('songModal');
-const SONGS_KEY = 'wedding_song_suggestions';
-
-function loadSongs() {
-  return JSON.parse(localStorage.getItem(SONGS_KEY) || '[]');
-}
-
-function renderSongs() {
-  const songs = loadSongs();
-  songCountEl.textContent = songs.length;
-  suggestionsList.innerHTML = songs.map(s => `<li>${s.text}</li>`).join('');
-  noSuggestions.style.display = songs.length ? 'none' : 'block';
-}
-renderSongs();
-
-document.getElementById('openSongModal').addEventListener('click', () => songModal.classList.add('open'));
-document.getElementById('openSongModal2').addEventListener('click', () => songModal.classList.add('open'));
-
-songForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const input = document.getElementById('songInput');
-  const songs = loadSongs();
-  songs.push({ text: input.value.trim(), at: Date.now() });
-  localStorage.setItem(SONGS_KEY, JSON.stringify(songs));
-  input.value = '';
-  renderSongs();
-  songModal.classList.remove('open');
-});
-
 // ---- FAQ accordion ----
 document.querySelectorAll('.accordion-trigger').forEach(trigger => {
   trigger.addEventListener('click', () => {

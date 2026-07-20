@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=30">
+<link rel="stylesheet" href="css/style.css?v=31">
 </head>
 <body>
 
@@ -288,43 +288,14 @@
       <img src="assets/icons/playlist.png" alt="Playlist">
     </span>
     <h2 class="reveal">Nuestra playlist</h2>
-    <p class="reveal">Queremos un matri bien prendido! Ayúdanos a armar la playlist y sugiere una canción para la fiesta.</p>
+    <p class="reveal">Queremos un matri bien prendido! Esta es la playlist para la fiesta.</p>
 
-    <div class="tabs reveal">
-      <button class="tab-btn active" data-tab="tab-playlist">Playlist</button>
-      <button class="tab-btn" data-tab="tab-sugerencias">Sugerencias (<span id="songCount">0</span>)</button>
+    <div class="playlist-embed reveal">
+      <iframe title="Playlist de Spotify" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1haYOQUTZg4IE0dGVvI5bj?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
-
-    <div class="tab-panel active" id="tab-playlist">
-      <div class="playlist-embed">
-        <iframe title="Playlist de Spotify" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1haYOQUTZg4IE0dGVvI5bj?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      </div>
-      <div class="playlist-actions">
-        <button class="btn btn-solid" id="openSongModal">Sugiere una canción</button>
-        <a class="btn btn-outline" href="https://open.spotify.com/playlist/1haYOQUTZg4IE0dGVvI5bj" target="_blank" rel="noopener">Abrir en Spotify</a>
-      </div>
-    </div>
-
-    <div class="tab-panel" id="tab-sugerencias">
-      <ul class="suggestions-list" id="suggestionsList"></ul>
-      <p class="fine-print" id="noSuggestions">Todavía no hay sugerencias. ¡Sé el primero!</p>
-      <div class="text-center">
-        <button class="btn btn-solid" id="openSongModal2">Sugiere una canción</button>
-      </div>
-    </div>
+    <a class="btn btn-solid reveal" href="https://open.spotify.com/playlist/1haYOQUTZg4IE0dGVvI5bj" target="_blank" rel="noopener">Ir a playlist</a>
   </div>
 </section>
-
-<div class="modal" id="songModal">
-  <div class="modal-box">
-    <button class="modal-close" data-close="songModal">&times;</button>
-    <h3>Sugiere una canción</h3>
-    <form id="songForm" class="song-form">
-      <input type="text" id="songInput" placeholder="Nombre de la canción y artista" required>
-      <button type="submit" class="btn btn-solid">Enviar</button>
-    </form>
-  </div>
-</div>
 
 <section id="galeria-playlist" class="section-carousel">
   <div class="carousel-track">
@@ -494,6 +465,6 @@
   <p class="fine-print">Plantilla personal — reemplaza este texto por el tuyo</p>
 </footer>
 
-<script src="js/script.js?v=27"></script>
+<script src="js/script.js?v=28"></script>
 </body>
 </html>
