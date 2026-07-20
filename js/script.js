@@ -33,6 +33,17 @@ navLinks.querySelectorAll('a').forEach(a =>
   a.addEventListener('click', () => navLinks.classList.remove('open'))
 );
 
+// Close the mobile menu on an outside tap/click or Escape — otherwise the only
+// way out was picking a section link.
+document.addEventListener('click', (e) => {
+  if (navLinks.classList.contains('open') && !navLinks.contains(e.target) && !navToggle.contains(e.target)) {
+    navLinks.classList.remove('open');
+  }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') navLinks.classList.remove('open');
+});
+
 // ---- Scroll reveal ----
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -137,7 +148,7 @@ const musicToggle = document.getElementById('musicToggle');
 const iconPlay = document.getElementById('iconPlay');
 const iconPause = document.getElementById('iconPause');
 const bgAudio = document.getElementById('bgAudio');
-const BG_AUDIO_START = 64; // 1:04
+const BG_AUDIO_START = 65; // 1:05
 
 let bgAudioStarted = false;
 
