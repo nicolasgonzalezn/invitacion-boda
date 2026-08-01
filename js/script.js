@@ -1,5 +1,5 @@
 // ---- Config ----
-const WEDDING_DATE = new Date('2026-12-12T17:00:00');
+const WEDDING_DATE = new Date('2026-12-12T17:30:00');
 
 // ---- Loader / entry gate ----
 // Browsers never allow audio-with-sound to autoplay on page load or on scroll —
@@ -163,6 +163,11 @@ function setMusicIcon(isPlaying) {
 // currentTime is set on the 'playing' event (playback has genuinely begun) rather
 // than on the play() promise resolving, since on iOS Safari a seek made any
 // earlier is silently ignored and playback keeps going from 0:00.
+//
+// This is intentionally NOT attempted on window 'load' — some embedded webviews
+// (e.g. WhatsApp Desktop's in-app browser) are far more permissive about autoplay
+// than real browsers and would let it start before the guest ever taps "Toca
+// para comenzar". Playback should only ever begin from a genuine interaction.
 function attemptBgAudioAutostart() {
   if (bgAudioStarted) return;
   bgAudioStarted = true;
@@ -179,7 +184,6 @@ bgAudio.addEventListener('ended', () => {
 bgAudio.addEventListener('play', () => setMusicIcon(true));
 bgAudio.addEventListener('pause', () => setMusicIcon(false));
 
-window.addEventListener('load', attemptBgAudioAutostart);
 ['pointerdown', 'mousedown', 'touchend', 'keydown', 'click', 'wheel'].forEach(evt => {
   document.addEventListener(evt, attemptBgAudioAutostart, { once: true, passive: true });
 });
