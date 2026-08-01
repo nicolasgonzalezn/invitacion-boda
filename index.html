@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=32">
+<link rel="stylesheet" href="css/style.css?v=33">
 </head>
 <body>
 
@@ -354,6 +354,7 @@
   </div>
 
   <div class="rsvp-card reveal" id="rsvpCard">
+    <p class="rsvp-hint">Si fuiste invitado con +1, completa este formulario una vez por cada persona.</p>
     <div class="rsvp-guest" data-guest="invitado">
       <input type="text" class="rsvp-name-input" id="guestName" placeholder="Tu nombre" autocomplete="name" required>
       <div class="rsvp-actions">
@@ -361,20 +362,33 @@
         <button class="rsvp-btn" data-answer="no">No asistiré</button>
       </div>
     </div>
-    <div class="rsvp-guest" data-guest="acompanante">
-      <input type="text" class="rsvp-name-input" id="companionName" placeholder="Nombre de tu acompañante (opcional)" autocomplete="off">
-      <div class="rsvp-actions">
-        <button class="rsvp-btn" data-answer="si">Asistirá</button>
-        <button class="rsvp-btn" data-answer="no">No asistirá</button>
-      </div>
+    <div class="rsvp-field">
+      <label for="dietaryRestriction">Restricción alimentaria</label>
+      <input type="text" class="rsvp-text-input" id="dietaryRestriction" placeholder="Opcional">
+    </div>
+    <div class="rsvp-field">
+      <label for="funFact">Cuéntanos un dato curioso sobre ti.</label>
+      <p class="rsvp-field-hint">Puede ser un hobby, un talento oculto, un viaje inolvidable o cualquier dato entretenido.</p>
+      <textarea class="rsvp-text-input" id="funFact" placeholder="Tu respuesta" rows="2"></textarea>
     </div>
   </div>
 
   <div class="text-center">
-    <button class="btn btn-solid reveal" id="confirmRsvp">Confirmar asistencia</button>
+    <button class="btn btn-solid reveal" id="confirmRsvp">
+      <span class="btn-label">Confirmar asistencia</span>
+      <svg class="btn-check" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </button>
     <p class="fine-print" id="rsvpStatus" style="min-height: 1.2em;"></p>
   </div>
 </section>
+
+<div class="rsvp-confirm-modal" id="rsvpConfirmModal">
+  <div class="rsvp-confirm-box">
+    <img src="assets/icons/rsvp.png?v=2" alt="" class="rsvp-confirm-icon">
+    <svg class="rsvp-confirm-check" viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <p id="rsvpConfirmText">Respuesta recibida</p>
+  </div>
+</div>
 
 <section id="contacto" class="section split">
   <div class="split-text">
@@ -477,6 +491,6 @@
   <p class="fine-print">Plantilla personal — reemplaza este texto por el tuyo</p>
 </footer>
 
-<script src="js/script.js?v=29"></script>
+<script src="js/script.js?v=30"></script>
 </body>
 </html>

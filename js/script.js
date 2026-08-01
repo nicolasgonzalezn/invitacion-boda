@@ -248,89 +248,79 @@ document.querySelectorAll('.accordion-trigger').forEach(trigger => {
   });
 });
 
-// ---- RSVP (always editable, stored locally + submitted to Google Form) ----
-const RSVP_KEY = 'wedding_rsvp_response';
+// ---- RSVP (one guest per submission — resets after each send for the +1) ----
 const rsvpCard = document.getElementById('rsvpCard');
 const confirmBtn = document.getElementById('confirmRsvp');
-const rsvpHeadingText = document.getElementById('rsvpDeadline');
 const rsvpStatus = document.getElementById('rsvpStatus');
 const guestNameInput = document.getElementById('guestName');
-const companionNameInput = document.getElementById('companionName');
+const dietaryInput = document.getElementById('dietaryRestriction');
+const funFactInput = document.getElementById('funFact');
+const rsvpConfirmModal = document.getElementById('rsvpConfirmModal');
+const rsvpConfirmText = document.getElementById('rsvpConfirmText');
 
 const GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScJYJw4sKhAgo2Smg0EDzoTTdpWMt8K61L9D3nMh8rTZGyEdQ/formResponse';
 const GOOGLE_FORM_ENTRIES = {
   guestName: 'entry.2091283678',
   guestAttendance: 'entry.1397392961',
-  companionName: 'entry.701161562',
-  companionAttendance: 'entry.1829700986',
+  dietaryRestriction: 'entry.701161562',
+  funFact: 'entry.1829700986',
 };
-
-function getSelections() {
-  const selections = {
-    guestName: guestNameInput.value.trim(),
-    companionName: companionNameInput.value.trim(),
-  };
-  rsvpCard.querySelectorAll('.rsvp-guest').forEach(guest => {
-    const active = guest.querySelector('.rsvp-btn.active-si, .rsvp-btn.active-no');
-    selections[guest.dataset.guest] = active ? active.dataset.answer : null;
-  });
-  return selections;
-}
-
-function applySelections(selections) {
-  guestNameInput.value = selections.guestName || '';
-  companionNameInput.value = selections.companionName || '';
-  rsvpCard.querySelectorAll('.rsvp-guest').forEach(guest => {
-    const answer = selections[guest.dataset.guest];
-    guest.querySelectorAll('.rsvp-btn').forEach(btn => {
-      btn.classList.toggle('active-si', answer === 'si' && btn.dataset.answer === 'si');
-      btn.classList.toggle('active-no', answer === 'no' && btn.dataset.answer === 'no');
-    });
-  });
-}
 
 rsvpCard.querySelectorAll('.rsvp-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const guest = btn.closest('.rsvp-guest');
-    guest.querySelectorAll('.rsvp-btn').forEach(b => b.classList.remove('active-si', 'active-no'));
+    rsvpCard.querySelectorAll('.rsvp-btn').forEach(b => b.classList.remove('active-si', 'active-no'));
     btn.classList.add(btn.dataset.answer === 'si' ? 'active-si' : 'active-no');
   });
 });
 
-function submitToGoogleForm(selections) {
+function getAttendance() {
+  const active = rsvpCard.querySelector('.rsvp-btn.active-si, .rsvp-btn.active-no');
+  return active ? active.dataset.answer : null;
+}
+
+function submitToGoogleForm({ guestName, attendance, dietaryRestriction, funFact }) {
   const params = new URLSearchParams();
-  params.append(GOOGLE_FORM_ENTRIES.guestName, selections.guestName);
-  params.append(GOOGLE_FORM_ENTRIES.guestAttendance, selections.invitado === 'si' ? 'Asistiré' : 'No Asistiré');
-  if (selections.companionName) {
-    params.append(GOOGLE_FORM_ENTRIES.companionName, selections.companionName);
-    if (selections.acompanante) {
-      params.append(GOOGLE_FORM_ENTRIES.companionAttendance, selections.acompanante === 'si' ? 'Asistiré' : 'No Asistiré');
-    }
-  }
+  params.append(GOOGLE_FORM_ENTRIES.guestName, guestName);
+  params.append(GOOGLE_FORM_ENTRIES.guestAttendance, attendance === 'si' ? 'Asistiré' : 'No Asistiré');
+  if (dietaryRestriction) params.append(GOOGLE_FORM_ENTRIES.dietaryRestriction, dietaryRestriction);
+  if (funFact) params.append(GOOGLE_FORM_ENTRIES.funFact, funFact);
   return fetch(GOOGLE_FORM_ACTION, { method: 'POST', mode: 'no-cors', body: params });
 }
 
+function resetRsvpForm() {
+  guestNameInput.value = '';
+  dietaryInput.value = '';
+  funFactInput.value = '';
+  rsvpCard.querySelectorAll('.rsvp-btn').forEach(b => b.classList.remove('active-si', 'active-no'));
+  confirmBtn.classList.remove('is-sent');
+  rsvpStatus.textContent = '';
+}
+
 confirmBtn.addEventListener('click', () => {
-  const selections = getSelections();
-  if (!selections.guestName) {
+  const guestName = guestNameInput.value.trim();
+  const attendance = getAttendance();
+  if (!guestName) {
     rsvpStatus.textContent = 'Por favor escribe tu nombre.';
     guestNameInput.focus();
     return;
   }
-  if (!selections.invitado) {
+  if (!attendance) {
     rsvpStatus.textContent = 'Por favor indica si asistirás.';
     return;
   }
-  localStorage.setItem(RSVP_KEY, JSON.stringify(selections));
-  rsvpHeadingText.textContent = '¡Gracias por confirmar! Puedes cambiar tu respuesta cuando quieras.';
-  rsvpStatus.textContent = 'Enviando...';
-  submitToGoogleForm(selections)
-    .then(() => { rsvpStatus.textContent = 'Respuesta enviada ✓'; })
-    .catch(() => { rsvpStatus.textContent = 'Guardado en este dispositivo. Revisa tu conexión e inténtalo de nuevo.'; });
-});
 
-const savedRsvp = localStorage.getItem(RSVP_KEY);
-if (savedRsvp) {
-  applySelections(JSON.parse(savedRsvp));
-  rsvpHeadingText.textContent = '¡Gracias por confirmar! Puedes cambiar tu respuesta cuando quieras.';
-}
+  const dietaryRestriction = dietaryInput.value.trim();
+  const funFact = funFactInput.value.trim();
+
+  confirmBtn.classList.add('is-sent');
+  rsvpStatus.textContent = '';
+  rsvpConfirmText.textContent = `Respuesta de ${guestName} recibida`;
+  rsvpConfirmModal.classList.add('open');
+
+  submitToGoogleForm({ guestName, attendance, dietaryRestriction, funFact }).catch(() => {});
+
+  setTimeout(() => {
+    rsvpConfirmModal.classList.remove('open');
+    resetRsvpForm();
+  }, 1800);
+});
