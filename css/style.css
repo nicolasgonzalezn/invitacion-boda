@@ -147,6 +147,7 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 #faq .icon-badge:not(.icon-badge-img), #playlist .icon-badge:not(.icon-badge-img), #contacto .icon-badge:not(.icon-badge-img), #itinerario .icon-badge:not(.icon-badge-img) { background: var(--color-primary); }
 #rsvp .icon-badge:not(.icon-badge-img) { background: var(--color-bronze); color: var(--color-primary-dark); }
 #rsvp .section-heading h2 { color: #fff; }
+#rsvp .section-heading p { color: #fff; }
 
 /* Split sections */
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
@@ -386,7 +387,8 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 #contacto .contact-buttons { justify-content: center; }
 
 footer { text-align: center; padding: 50px 20px; color: var(--color-text-soft); }
-footer .script-accent { font-size: 1.8rem; color: var(--color-primary-dark); }
+.footer-name { font-size: 1.8rem; color: var(--color-primary-dark); }
+.footer-date { font-size: 1.1rem; color: var(--color-text-soft); margin-top: 6px; }
 
 /* Scroll reveal */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
