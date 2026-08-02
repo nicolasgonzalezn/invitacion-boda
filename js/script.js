@@ -147,6 +147,26 @@ const confettiObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 confettiObserver.observe(document.getElementById('itinerario'));
 
+// ---- Reinforce autoplay for the fullbleed background videos ----
+// The native autoplay attribute alone isn't reliable on iOS Safari for larger
+// files on cellular data — it sometimes silently falls back to showing the
+// paused play button instead of starting. Muted video can autoplay without a
+// user gesture, so calling .play() explicitly once each video is in view (and
+// retrying if the browser wasn't ready yet) is the standard, more robust fix.
+document.querySelectorAll('.fb-autoplay-video').forEach(video => {
+  const tryPlay = () => video.play().catch(() => {});
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) tryPlay();
+    });
+  }, { threshold: 0.1 });
+  videoObserver.observe(video);
+  video.addEventListener('loadeddata', tryPlay);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && video.paused) tryPlay();
+  });
+});
+
 // ---- Background music (floating button controls this, and only this) ----
 const musicToggle = document.getElementById('musicToggle');
 const iconPlay = document.getElementById('iconPlay');
