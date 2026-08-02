@@ -1,5 +1,8 @@
 // ---- Config ----
-const WEDDING_DATE = new Date('2026-12-12T17:30:00');
+// -03:00: hora de Santiago de Chile en diciembre (horario de verano). Fijar el
+// offset asegura que el countdown apunte al mismo instante real sin importar
+// la zona horaria del dispositivo de cada invitado.
+const WEDDING_DATE = new Date('2026-12-12T17:30:00-03:00');
 
 // ---- Loader / entry gate ----
 // Browsers never allow audio-with-sound to autoplay on page load or on scroll —
