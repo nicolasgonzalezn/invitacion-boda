@@ -344,6 +344,8 @@ h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin: 0; }
 .rsvp-btn.active-no { background: var(--color-granada); border-color: var(--color-granada); }
 
 .rsvp-hint { color: rgba(255,255,255,.7); font-size: .85rem; text-align: center; margin: 4px 0 0; }
+.rsvp-extra-fields { max-height: 0; overflow: hidden; transition: max-height .45s ease; }
+.rsvp-extra-fields.open { max-height: 500px; }
 .rsvp-field { padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.15); text-align: left; }
 .rsvp-field:last-child { border-bottom: none; }
 .rsvp-field label { display: block; font-family: var(--font-heading); color: #fff; font-size: .95rem; margin-bottom: 4px; }

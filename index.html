@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=33">
+<link rel="stylesheet" href="css/style.css?v=34">
 </head>
 <body>
 
@@ -362,14 +362,16 @@
         <button class="rsvp-btn" data-answer="no">No asistiré</button>
       </div>
     </div>
-    <div class="rsvp-field">
-      <label for="dietaryRestriction">Restricción alimentaria</label>
-      <input type="text" class="rsvp-text-input" id="dietaryRestriction" placeholder="Opcional">
-    </div>
-    <div class="rsvp-field">
-      <label for="funFact">Cuéntanos un dato curioso sobre ti.</label>
-      <p class="rsvp-field-hint">Puede ser un hobby, un talento oculto, un viaje inolvidable o cualquier dato entretenido.</p>
-      <textarea class="rsvp-text-input" id="funFact" placeholder="Tu respuesta" rows="2"></textarea>
+    <div class="rsvp-extra-fields" id="rsvpExtraFields">
+      <div class="rsvp-field">
+        <label for="dietaryRestriction">Restricción alimentaria</label>
+        <input type="text" class="rsvp-text-input" id="dietaryRestriction" placeholder="Opcional">
+      </div>
+      <div class="rsvp-field">
+        <label for="funFact">Cuéntanos un dato curioso sobre ti.</label>
+        <p class="rsvp-field-hint">Puede ser un hobby, un talento oculto, un viaje inolvidable o cualquier dato entretenido.</p>
+        <textarea class="rsvp-text-input" id="funFact" placeholder="Tu respuesta" rows="2"></textarea>
+      </div>
     </div>
   </div>
 
@@ -491,6 +493,6 @@
   <p class="fine-print">Plantilla personal — reemplaza este texto por el tuyo</p>
 </footer>
 
-<script src="js/script.js?v=30"></script>
+<script src="js/script.js?v=31"></script>
 </body>
 </html>

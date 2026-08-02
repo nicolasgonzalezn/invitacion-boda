@@ -257,6 +257,7 @@ const dietaryInput = document.getElementById('dietaryRestriction');
 const funFactInput = document.getElementById('funFact');
 const rsvpConfirmModal = document.getElementById('rsvpConfirmModal');
 const rsvpConfirmText = document.getElementById('rsvpConfirmText');
+const rsvpExtraFields = document.getElementById('rsvpExtraFields');
 
 const GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLScJYJw4sKhAgo2Smg0EDzoTTdpWMt8K61L9D3nMh8rTZGyEdQ/formResponse';
 const GOOGLE_FORM_ENTRIES = {
@@ -270,6 +271,13 @@ rsvpCard.querySelectorAll('.rsvp-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     rsvpCard.querySelectorAll('.rsvp-btn').forEach(b => b.classList.remove('active-si', 'active-no'));
     btn.classList.add(btn.dataset.answer === 'si' ? 'active-si' : 'active-no');
+    if (btn.dataset.answer === 'si') {
+      rsvpExtraFields.classList.add('open');
+    } else {
+      rsvpExtraFields.classList.remove('open');
+      dietaryInput.value = '';
+      funFactInput.value = '';
+    }
   });
 });
 
@@ -292,6 +300,7 @@ function resetRsvpForm() {
   dietaryInput.value = '';
   funFactInput.value = '';
   rsvpCard.querySelectorAll('.rsvp-btn').forEach(b => b.classList.remove('active-si', 'active-no'));
+  rsvpExtraFields.classList.remove('open');
   confirmBtn.classList.remove('is-sent');
   rsvpStatus.textContent = '';
 }
@@ -322,5 +331,5 @@ confirmBtn.addEventListener('click', () => {
   setTimeout(() => {
     rsvpConfirmModal.classList.remove('open');
     resetRsvpForm();
-  }, 1800);
+  }, 2800);
 });
