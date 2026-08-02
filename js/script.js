@@ -7,7 +7,11 @@ const WEDDING_DATE = new Date('2026-12-12T17:30:00');
 // tap/click to unlock it. So the loader becomes a "tap to enter" gate once the
 // page is ready: that single click both reveals the invitation and starts the
 // background track, in the same trusted gesture.
-window.addEventListener('load', () => {
+// DOMContentLoaded (not window 'load'): the gate only needs the page's own HTML/CSS/JS
+// parsed, not every image/video/audio finished downloading — waiting for 'load' was
+// stalling the "Toca para comenzar" button behind the ~19MB of autoplay video + the
+// preloaded background track before the guest could do anything at all.
+document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loaderLoading').style.display = 'none';
   document.getElementById('enterButton').style.display = 'flex';
 });
